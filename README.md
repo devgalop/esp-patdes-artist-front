@@ -21,3 +21,61 @@ El proyecto se desarrollará como un SPA (Single Page Application) bajo un model
 ## Tecnologías utilizadas
 
 - **Angular**
+
+## Estructura del proyecto
+
+- **src/**: Contiene todo el código fuente del proyecto.
+  - **app/**: Contiene la lógica principal de la aplicación.
+    - **core/**: Contiene servicios, interceptores y guards que son singleton/globales en toda la aplicación.
+    - **shared/**: Contiene componentes, pipes y directivas reutilizables en toda la aplicación.
+    - **modules/**: Contiene módulos basados en características (feature-based), cada uno con sus propias páginas, componentes, servicios, modelos y rutas.
+  - **assets/**: Contiene recursos estáticos como imágenes, estilos globales, etc.
+
+```bash
+src/
+│
+├── app/
+│   ├── core/                     # singleton/global
+│   │   ├── services/
+│   │   │   └── api.service.ts
+│   │   ├── interceptors/
+│   │   └── guards/
+│   │
+│   ├── shared/                   # reutilizable (UI genérico)
+│   │   ├── components/
+│   │   │   ├── button/
+│   │   │   └── modal/
+│   │   ├── pipes/
+│   │   └── directives/
+│   │
+│   ├── modules/                  # feature-based (clave)
+│   │   ├── event-management/
+│   │   │   ├── pages/
+│   │   │   │   ├── create-event/
+│   │   │   │   │   ├── create-event.component.ts
+│   │   │   │   │   ├── create-event.html
+│   │   │   │   │   └── create-event.scss
+│   │   │   │   │
+│   │   │   │   └── event-detail/
+│   │   │   │
+│   │   │   ├── components/
+│   │   │   │   └── event-card/
+│   │   │   │
+│   │   │   ├── services/
+│   │   │   │   └── event.service.ts
+│   │   │   │
+│   │   │   ├── models/
+│   │   │   │   └── event.model.ts
+│   │   │   │
+│   │   │   └── routes.ts
+│   │   │
+│   │   ├── venue-management/
+│   │   ├── service-marketplace/
+│   │   ├── order-management/
+│   │   └── ticketing/
+│   │
+│   ├── app.routes.ts
+│   └── app.config.ts
+│
+└── assets/
+```
