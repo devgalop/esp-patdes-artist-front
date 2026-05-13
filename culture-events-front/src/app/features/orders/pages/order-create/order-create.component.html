@@ -1,0 +1,85 @@
+<app-page-header title="Create Order" subtitle="Generate a provider order for an event" />
+
+<mat-card class="form-card">
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>User ID</mat-label>
+          <input matInput formControlName="userId" placeholder="User identifier" />
+          @if (form.get('userId')?.hasError('required') && form.get('userId')?.touched) {
+            <mat-error>User ID is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Event ID</mat-label>
+          <input matInput formControlName="eventId" placeholder="Event identifier" />
+          @if (form.get('eventId')?.hasError('required') && form.get('eventId')?.touched) {
+            <mat-error>Event ID is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Provider</mat-label>
+          <mat-select formControlName="providerId">
+            @for (p of providers; track p) {
+              <mat-option [value]="p">{{ p }}</mat-option>
+            }
+          </mat-select>
+          @if (form.get('providerId')?.hasError('required') && form.get('providerId')?.touched) {
+            <mat-error>Provider is required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Coupon Code (optional)</mat-label>
+          <input matInput formControlName="cuponCode" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Observations (optional)</mat-label>
+          <textarea matInput formControlName="observations" rows="2"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="section-header">
+        <h3>Order Items</h3>
+        <button mat-stroked-button type="button" (click)="addDetail()">
+          <mat-icon>add</mat-icon> Add Item
+        </button>
+      </div>
+
+      <div formArrayName="details">
+        @for (detail of detailsArray.controls; track $index) {
+          <div [formGroupName]="$index" class="detail-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Product ID</mat-label>
+              <input matInput formControlName="productId" placeholder="e.g. Sofa" />
+              @if (detail.get('productId')?.hasError('required') && detail.get('productId')?.touched) {
+                <mat-error>Product ID required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="qty-field">
+              <mat-label>Quantity</mat-label>
+              <input matInput formControlName="quantity" type="number" min="1" />
+            </mat-form-field>
+
+            <button mat-icon-button type="button" color="warn"
+                    (click)="removeDetail($index)"
+                    [disabled]="detailsArray.length === 1"
+                    aria-label="Remove item">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+
+      <div class="form-actions">
+        <a mat-stroked-button routerLink="/events">Cancel</a>
+        <button mat-flat-button color="primary" type="submit">Submit Order</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

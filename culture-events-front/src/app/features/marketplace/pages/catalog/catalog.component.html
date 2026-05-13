@@ -1,0 +1,43 @@
+<app-page-header title="Marketplace" subtitle="Browse provider catalogs and products" />
+
+<div class="provider-selector">
+  <mat-form-field appearance="outline">
+    <mat-label>Provider</mat-label>
+    <mat-select [formControl]="providerControl">
+      @for (p of providers; track p) {
+        <mat-option [value]="p">{{ p }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
+
+@if (products().length === 0) {
+  <app-empty-state
+    icon="storefront"
+    title="No products"
+    message="This provider has no products in the catalog." />
+} @else {
+  <div class="products-grid">
+    @for (product of products(); track product.id) {
+      <mat-card class="product-card">
+        <mat-card-header>
+          <mat-card-title>{{ product.name }}</mat-card-title>
+          @if (product.category) {
+            <mat-card-subtitle>{{ product.category }}</mat-card-subtitle>
+          }
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ product.description }}</p>
+          <p class="price">{{ product.price | currencyFormat }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-stroked-button color="primary" routerLink="/orders/create"
+           [queryParams]="{ providerId: product.providerId ?? currentProvider(), productId: product.id }">
+            <mat-icon>add_shopping_cart</mat-icon>
+            Order
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    }
+  </div>
+}

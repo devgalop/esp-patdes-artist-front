@@ -1,0 +1,34 @@
+.detail-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.detail-card { max-width: 720px; }
+
+.description {
+  margin: 0 0 24px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  mat-icon { color: var(--mat-sys-primary); margin-top: 2px; }
+
+  div { display: flex; flex-direction: column; }
+
+  .label { font-size: .75rem; opacity: .65; text-transform: uppercase; letter-spacing: .05em; }
+  .value { font-size: 1rem; font-weight: 500; }
+}

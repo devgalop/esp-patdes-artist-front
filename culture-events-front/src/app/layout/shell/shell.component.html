@@ -1,0 +1,41 @@
+<app-loading-spinner />
+
+<mat-sidenav-container class="app-container">
+  <mat-sidenav
+    [opened]="sidenavOpen()"
+    mode="side"
+    class="app-sidenav"
+    role="navigation"
+    aria-label="Main navigation">
+    <div class="sidenav-header">
+      <mat-icon class="sidenav-logo">celebration</mat-icon>
+      <span class="sidenav-title">CultureEvents</span>
+    </div>
+
+    <mat-nav-list>
+      @for (item of navItems; track item.route) {
+        <a mat-list-item
+           [routerLink]="item.route"
+           routerLinkActive="active-link"
+           [routerLinkActiveOptions]="{ exact: false }"
+           [attr.aria-label]="item.label">
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span matListItemTitle>{{ item.label }}</span>
+        </a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar class="app-toolbar" role="banner">
+      <button mat-icon-button (click)="toggleSidenav()" aria-label="Toggle navigation">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="toolbar-spacer"></span>
+    </mat-toolbar>
+
+    <main class="app-content" id="main-content">
+      <router-outlet />
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

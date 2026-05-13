@@ -1,0 +1,87 @@
+<form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <div class="form-grid">
+    <mat-form-field appearance="outline">
+      <mat-label>Event name</mat-label>
+      <input matInput formControlName="name" placeholder="Name of the event" />
+      @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+        <mat-error>Name is required</mat-error>
+      }
+      @if (form.get('name')?.hasError('minlength') && form.get('name')?.touched) {
+        <mat-error>Minimum 3 characters</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" rows="3" placeholder="Describe the event"></textarea>
+      @if (form.get('description')?.hasError('required') && form.get('description')?.touched) {
+        <mat-error>Description is required</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Scheduled Date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="scheduledAt" />
+      <mat-datepicker-toggle matIconSuffix [for]="picker" />
+      <mat-datepicker #picker />
+      @if (form.get('scheduledAt')?.hasError('required') && form.get('scheduledAt')?.touched) {
+        <mat-error>Date is required</mat-error>
+      }
+      @if (form.get('scheduledAt')?.hasError('pastDate') && form.get('scheduledAt')?.touched) {
+        <mat-error>Date must be in the future</mat-error>
+      }
+    </mat-form-field>
+
+    <div formGroupName="details" class="form-grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Event Type</mat-label>
+        <mat-select formControlName="type">
+          @for (type of eventTypes; track type) {
+            <mat-option [value]="type">{{ type }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('details.type')?.hasError('required') && form.get('details.type')?.touched) {
+          <mat-error>Type is required</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Billing Type</mat-label>
+        <mat-select formControlName="billingType">
+          @for (type of billingTypes; track type) {
+            <mat-option [value]="type">{{ type }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('details.billingType')?.hasError('required') && form.get('details.billingType')?.touched) {
+          <mat-error>Billing type is required</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Price</mat-label>
+        <input matInput formControlName="price" type="number" min="0" placeholder="0.00" />
+        <span matTextPrefix>$&nbsp;</span>
+        <mat-hint>Only required for Paid events</mat-hint>
+        @if (form.get('details.price')?.hasError('required') && form.get('details.price')?.touched) {
+          <mat-error>Price is required for paid events</mat-error>
+        }
+        @if (form.get('details.price')?.hasError('notPositive') && form.get('details.price')?.touched) {
+          <mat-error>Must be a positive number</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Location</mat-label>
+        <input matInput formControlName="location" placeholder="Room / Venue / Address" />
+        <mat-hint>Only required for Paid events</mat-hint>
+        @if (form.get('details.location')?.hasError('required') && form.get('details.location')?.touched) {
+          <mat-error>Location is required for paid events</mat-error>
+        }
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button mat-flat-button color="primary" type="submit">{{ submitLabel() }}</button>
+  </div>
+</form>

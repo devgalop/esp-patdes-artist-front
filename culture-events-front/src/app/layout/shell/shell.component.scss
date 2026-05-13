@@ -1,0 +1,40 @@
+.app-container {
+  height: 100vh;
+}
+
+.app-sidenav {
+  width: 240px;
+  border-right: 1px solid var(--mat-sys-outline-variant);
+
+  .sidenav-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 16px;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+
+    .sidenav-logo { color: var(--mat-sys-primary); font-size: 32px; width: 32px; height: 32px; }
+    .sidenav-title { font-size: 1.1rem; font-weight: 600; }
+  }
+}
+
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.toolbar-spacer { flex: 1; }
+
+.app-content {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+::ng-deep .active-link {
+  background: var(--mat-sys-secondary-container) !important;
+  color: var(--mat-sys-on-secondary-container) !important;
+  border-radius: 8px;
+}

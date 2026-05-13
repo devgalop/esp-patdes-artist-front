@@ -1,0 +1,65 @@
+@if (event()) {
+  <app-page-header [title]="event()!.name" subtitle="Event Details" />
+
+  <div class="detail-actions">
+    <a mat-stroked-button routerLink="/events">
+      <mat-icon>arrow_back</mat-icon> Back
+    </a>
+    <a mat-flat-button color="accent" [routerLink]="['/events', id(), 'reschedule']">
+      <mat-icon>schedule</mat-icon> Reschedule
+    </a>
+    <a mat-flat-button color="primary" routerLink="/orders/create" [queryParams]="{ eventId: event()!.id }">
+      <mat-icon>shopping_cart</mat-icon> Create Order
+    </a>
+  </div>
+
+  <mat-card class="detail-card">
+    <mat-card-content>
+      <p class="description">{{ event()!.description }}</p>
+
+      <div class="detail-grid">
+        <div class="detail-item">
+          <mat-icon>calendar_today</mat-icon>
+          <div>
+            <span class="label">Scheduled</span>
+            <span class="value">{{ event()!.scheduledAt | formatDate }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <mat-icon>category</mat-icon>
+          <div>
+            <span class="label">Type</span>
+            <span class="value">{{ event()!.details?.type }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <mat-icon>payments</mat-icon>
+          <div>
+            <span class="label">Billing</span>
+            <span class="value">{{ event()!.details?.billingType }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <mat-icon>attach_money</mat-icon>
+          <div>
+            <span class="label">Price</span>
+            <span class="value">{{ event()!.details?.price | currencyFormat }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <mat-icon>location_on</mat-icon>
+          <div>
+            <span class="label">Location</span>
+            <span class="value">{{ event()!.details?.location }}</span>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+} @else {
+  <p>Loading event...</p>
+}
