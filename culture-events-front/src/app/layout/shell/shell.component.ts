@@ -29,6 +29,7 @@ export class ShellComponent {
     { label: 'Events', icon: 'event', route: '/events' },
     { label: 'Marketplace', icon: 'storefront', route: '/marketplace' },
     { label: 'Create Order', icon: 'shopping_cart', route: '/orders/create' },
+    { label: 'Pay Order', icon: 'payments', route: '/orders/pay' },
   ];
 
   readonly sidenavOpen = signal(true);

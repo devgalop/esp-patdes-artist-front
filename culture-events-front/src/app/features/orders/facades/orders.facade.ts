@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrdersApiService } from '../../../core/services/orders-api.service';
 import { NotificationService } from '../../../core/services/notification.service';
-import { CreateOrderDto } from '../../../core/models/order.model';
+import { CreateOrderDto, PayOrderDto } from '../../../core/models/order.model';
 
 @Injectable({ providedIn: 'root' })
 export class OrdersFacade {
@@ -14,6 +14,16 @@ export class OrdersFacade {
     this.api.createOrder(dto).subscribe({
       next: () => {
         this.notification.success('Order created successfully');
+        this.router.navigate(['/events']);
+      },
+      error: () => {}
+    });
+  }
+
+  payOrder(dto: PayOrderDto): void {
+    this.api.payOrder(dto).subscribe({
+      next: () => {
+        this.notification.success('Order paid successfully');
         this.router.navigate(['/events']);
       },
       error: () => {}
